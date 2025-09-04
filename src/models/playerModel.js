@@ -22,6 +22,13 @@ class playerModel {
     return player;
   }
 
+  async create(player){
+    const newPlayer = await prisma.player.create({
+      data: player,
+    });
+
+    return newPlayer;
+  }
 }
 
 export default new playerModel();

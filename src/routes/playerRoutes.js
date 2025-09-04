@@ -8,4 +8,6 @@ playerRouter.get("/", playerController.getAllPlayers);
 
 playerRouter.get("/:id", playerController.getPlayerById);
 
+playerRouter.post("/", playerController.createPlayer);
+
 export default playerRouter;
