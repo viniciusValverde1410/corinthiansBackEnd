@@ -37,6 +37,13 @@ class TitleController {
           return res.status(400).json({ error: "Todos os dados do título são obrigatórios" });
         }
 
+        if (titleData.category) {
+          const categoryLower = titleData.category.toLowerCase();
+          if (categoryLower !== "estadual" && categoryLower !== "nacional" && categoryLower !== "internacional") {
+            return res.status(400).json({ error: "Categoria deve ser 'estadual', 'nacional' ou 'internacional'" });
+          }
+        }
+
         const newTitle = await TitleModel.create(titleData);
         res.status(201).json(newTitle);
       } catch (error) {
@@ -50,6 +57,18 @@ class TitleController {
     const titleData = req.body;
 
     try {
+
+      if (!titleData) {
+        return res.status(400).json({ error: "Todos os dados do título são obrigatórios" });
+      }
+
+      if (titleData.category) {
+        const categoryLower = titleData.category.toLowerCase();
+        if (categoryLower !== "estadual" && categoryLower !== "nacional" && categoryLower !== "internacional") {
+          return res.status(400).json({ error: "Categoria deve ser 'estadual', 'nacional' ou 'internacional'" });
+        }
+      }
+      
       const updatedTitle = await TitleModel.update(id, titleData);
       res.json(updatedTitle);
     } catch (error) {

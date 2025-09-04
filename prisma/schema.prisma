@@ -19,6 +19,8 @@ model Title {
   imageUrl String
   description String
   wonYear String // split(",")
+  category String
 
   @@map("titles")
 }
+
