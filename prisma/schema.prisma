@@ -24,3 +24,14 @@ model Title {
   @@map("titles")
 }
 
+model Player {
+  id       Int      @id @default(autoincrement())
+  name    String 
+  imageUrl String
+  position String
+  number Int
+  height String
+  age Int
+
+  @@map("squads")
+}
