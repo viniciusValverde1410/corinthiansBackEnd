@@ -58,6 +58,16 @@ class TitleController {
     }
   }
   
+  async deleteTitle(req, res) {
+    const { id } = req.params;
+    try {
+      await TitleModel.delete(id);
+      res.status(200).json({ message: "Título deletado com sucesso" });
+    } catch (error) {
+      console.error("Erro ao deletar título:", error);
+      res.status(500).json({ error: "Erro ao deletar título" });
+    }
+  }
 }
 
 export default new TitleController();

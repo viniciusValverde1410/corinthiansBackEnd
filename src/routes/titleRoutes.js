@@ -16,4 +16,7 @@ titleRouter.post("/", TitleController.createTitle);
 // PUT /api/titles/:id - Atualizar um anime pelo ID
 titleRouter.put("/:id", TitleController.updateTitle);
 
+// DELETE /api/titles/:id - Deletar um anime pelo ID
+titleRouter.delete("/:id", TitleController.deleteTitle);
+
 export default titleRouter;

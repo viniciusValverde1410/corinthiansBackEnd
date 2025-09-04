@@ -39,6 +39,13 @@ class tituloModel {
     return updatedTitle;
   }
 
+  async delete(id) {
+    const deletedTitle = await prisma.title.delete({
+      where: { id: Number(id) },
+    });
+  
+    return deletedTitle;
+  }
 }
 
 export default new tituloModel();
