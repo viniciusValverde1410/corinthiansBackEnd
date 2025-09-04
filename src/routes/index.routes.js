@@ -1,11 +1,11 @@
 import express from "express";
 
 // Importar todas as rotas
-import animesRouter from "./animeRoutes.js";
+import historysRouter from "./titleRoutes.js";
 
 const router = express.Router();
 
 // Rotas públicas
-router.use("/animes", animesRouter);
+router.use("/titles", historysRouter);
 
 export default router;

@@ -13,15 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Historys {
+model Title {
   id       Int      @id @default(autoincrement())
-  title   String
-  subtitle String ?
-  image1    String
-  image2    String ?
-  content  String
-  content2 String ?
-  content3 String ?
-  content4 String ?
-  content5 String ?
+  name    String 
+  imageUrl String
+  description String
+  wonYear String // split(",")
+
+  @@map("titles")
 }
