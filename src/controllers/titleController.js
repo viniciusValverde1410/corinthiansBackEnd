@@ -1,7 +1,6 @@
 import TitleModel from "../models/titleModel.js";
 
 class TitleController {
-
   async getAllTitles(req, res) {
     try {
       const titulos = await TitleModel.findAll();
@@ -30,26 +29,37 @@ class TitleController {
   }
 
   async createTitle(req, res) {
-      const titleData = req.body;
+    const titleData = req.body;
 
-      try {
-        if (!titleData) {
-          return res.status(400).json({ error: "Todos os dados do título são obrigatórios" });
-        }
-
-        if (titleData.category) {
-          const categoryLower = titleData.category.toLowerCase();
-          if (categoryLower !== "estadual" && categoryLower !== "nacional" && categoryLower !== "internacional") {
-            return res.status(400).json({ error: "Categoria deve ser 'estadual', 'nacional' ou 'internacional'" });
-          }
-        }
-
-        const newTitle = await TitleModel.create(titleData);
-        res.status(201).json(newTitle);
-      } catch (error) {
-        console.error("Erro ao criar título:", error);
-        res.status(500).json({ error: "Erro ao criar título" });
+    try {
+      if (!titleData) {
+        return res
+          .status(400)
+          .json({ error: "Todos os dados do título são obrigatórios" });
       }
+
+      if (titleData.category) {
+        const categoryLower = titleData.category.toLowerCase();
+        if (
+          categoryLower !== "estadual" &&
+          categoryLower !== "nacional" &&
+          categoryLower !== "internacional"
+        ) {
+          return res
+            .status(400)
+            .json({
+              error:
+                "Categoria deve ser 'estadual', 'nacional' ou 'internacional'",
+            });
+        }
+      }
+
+      const newTitle = await TitleModel.create(titleData);
+      res.status(201).json(newTitle);
+    } catch (error) {
+      console.error("Erro ao criar título:", error);
+      res.status(500).json({ error: "Erro ao criar título" });
+    }
   }
 
   async updateTitle(req, res) {
@@ -57,18 +67,33 @@ class TitleController {
     const titleData = req.body;
 
     try {
+      const existingPlayer = await playerModel.findById(id);
+      if (!existingPlayer) {
+        return res.status(404).json({ error: "Jogador não encontrado" });
+      }
 
       if (!titleData) {
-        return res.status(400).json({ error: "Todos os dados do título são obrigatórios" });
+        return res
+          .status(400)
+          .json({ error: "Todos os dados do título são obrigatórios" });
       }
 
       if (titleData.category) {
         const categoryLower = titleData.category.toLowerCase();
-        if (categoryLower !== "estadual" && categoryLower !== "nacional" && categoryLower !== "internacional") {
-          return res.status(400).json({ error: "Categoria deve ser 'estadual', 'nacional' ou 'internacional'" });
+        if (
+          categoryLower !== "estadual" &&
+          categoryLower !== "nacional" &&
+          categoryLower !== "internacional"
+        ) {
+          return res
+            .status(400)
+            .json({
+              error:
+                "Categoria deve ser 'estadual', 'nacional' ou 'internacional'",
+            });
         }
       }
-      
+
       const updatedTitle = await TitleModel.update(id, titleData);
       res.json(updatedTitle);
     } catch (error) {
@@ -76,7 +101,7 @@ class TitleController {
       res.status(500).json({ error: "Erro ao atualizar título" });
     }
   }
-  
+
   async deleteTitle(req, res) {
     const { id } = req.params;
     try {

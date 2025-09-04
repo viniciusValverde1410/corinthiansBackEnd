@@ -29,6 +29,14 @@ class playerModel {
 
     return newPlayer;
   }
+
+  async update(id, playerData) {
+    const updatedPlayer = await prisma.player.update({
+      where: { id: Number(id) },
+      data: playerData,
+    });
+    return updatedPlayer;
+  }
 }
 
 export default new playerModel();

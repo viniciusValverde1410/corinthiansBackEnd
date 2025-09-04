@@ -10,4 +10,6 @@ playerRouter.get("/:id", playerController.getPlayerById);
 
 playerRouter.post("/", playerController.createPlayer);
 
+playerRouter.put("/:id", playerController.updatePlayer);
+
 export default playerRouter;
