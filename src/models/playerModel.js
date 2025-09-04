@@ -37,6 +37,13 @@ class playerModel {
     });
     return updatedPlayer;
   }
+
+  async delete(id) {
+    await prisma.player.delete({
+      where: { id: Number(id) },
+    });
+    return;
+  }
 }
 
 export default new playerModel();

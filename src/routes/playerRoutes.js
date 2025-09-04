@@ -12,4 +12,6 @@ playerRouter.post("/", playerController.createPlayer);
 
 playerRouter.put("/:id", playerController.updatePlayer);
 
+playerRouter.delete("/:id", playerController.deletePlayer);
+
 export default playerRouter;
