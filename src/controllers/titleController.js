@@ -44,6 +44,20 @@ class TitleController {
         res.status(500).json({ error: "Erro ao criar título" });
       }
   }
+
+  async updateTitle(req, res) {
+    const { id } = req.params;
+    const titleData = req.body;
+
+    try {
+      const updatedTitle = await TitleModel.update(id, titleData);
+      res.json(updatedTitle);
+    } catch (error) {
+      console.error("Erro ao atualizar título:", error);
+      res.status(500).json({ error: "Erro ao atualizar título" });
+    }
+  }
+  
 }
 
 export default new TitleController();

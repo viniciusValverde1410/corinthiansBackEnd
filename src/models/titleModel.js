@@ -29,6 +29,16 @@ class tituloModel {
 
     return newTitle;
   }
+
+  async update(id, title) {
+    const updatedTitle = await prisma.title.update({
+      where: { id: Number(id) },
+      data: title,
+    });
+
+    return updatedTitle;
+  }
+
 }
 
 export default new tituloModel();

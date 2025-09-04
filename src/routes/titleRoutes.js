@@ -13,4 +13,7 @@ titleRouter.get("/:id", TitleController.getTitleById);
 // POST /api/titles - Criar um novo anime
 titleRouter.post("/", TitleController.createTitle);
 
+// PUT /api/titles/:id - Atualizar um anime pelo ID
+titleRouter.put("/:id", TitleController.updateTitle);
+
 export default titleRouter;
