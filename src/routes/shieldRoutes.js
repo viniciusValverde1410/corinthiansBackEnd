@@ -5,4 +5,6 @@ const shieldRouter = express.Router();
 
 shieldRouter.get("/", ShieldController.getAllShields);
 
+shieldRouter.get("/:id", ShieldController.getShieldById);
+
 export default shieldRouter;

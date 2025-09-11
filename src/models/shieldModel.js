@@ -7,6 +7,13 @@ class shieldModel {
 
         return shields;
     }
+
+    async findById(id) {
+        const shield = await prisma.shields.findUnique({
+            where: { id: parseInt(id) },
+        });
+        return shield;
+    }
 }
 
 export default new shieldModel();
