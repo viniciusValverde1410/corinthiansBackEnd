@@ -21,6 +21,14 @@ class legendModel {
         });
         return newLegend;
     }
+
+    async update(id, legendData) {
+        const updatedLegend = await prisma.legends.update({
+            where: { id: Number(id) },
+            data: legendData,
+        });
+        return updatedLegend;
+    }
 }
 
 export default new legendModel();

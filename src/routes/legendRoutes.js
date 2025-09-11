@@ -9,4 +9,6 @@ legendRouter.get("/:id", LegendController.getLegendById);
 
 legendRouter.post("/", LegendController.createLegend);
 
+legendRouter.put("/:id", LegendController.updateLegend);
+
 export default legendRouter;
