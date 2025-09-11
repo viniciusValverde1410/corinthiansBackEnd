@@ -25,6 +25,17 @@ class shieldController {
             res.status(500).json({ error: "Erro ao obter o escudo." });
         }
     }
+
+    async createShield(req, res) {
+        const shieldData = req.body;
+        try {
+            const newShield = await shieldModel.create(shieldData);
+            res.status(201).json(newShield);
+        } catch (error) {
+            console.error("Erro ao criar o escudo:", error);
+            res.status(500).json({ error: "Erro ao criar o escudo." });
+        }
+    }
 }
 
 export default new shieldController();

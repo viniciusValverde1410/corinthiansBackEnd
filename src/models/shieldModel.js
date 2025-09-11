@@ -14,6 +14,13 @@ class shieldModel {
         });
         return shield;
     }
+
+    async create(shieldData) {
+        const newShield = await prisma.shields.create({
+            data: shieldData,
+        });
+        return newShield;
+    }
 }
 
 export default new shieldModel();
