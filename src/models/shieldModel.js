@@ -10,7 +10,7 @@ class shieldModel {
 
     async findById(id) {
         const shield = await prisma.shields.findUnique({
-            where: { id: parseInt(id) },
+            where: { id: Number(id) },
         });
         return shield;
     }
@@ -20,6 +20,14 @@ class shieldModel {
             data: shieldData,
         });
         return newShield;
+    }
+
+    async update(id, shieldData) {
+        const updatedShield = await prisma.shields.update({
+            where: { id: Number(id) },
+            data: shieldData,
+        });
+        return updatedShield;
     }
 }
 

@@ -9,4 +9,6 @@ shieldRouter.get("/:id", ShieldController.getShieldById);
 
 shieldRouter.post("/", ShieldController.createShield);
 
+shieldRouter.put("/:id", ShieldController.updateShield);
+
 export default shieldRouter;
