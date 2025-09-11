@@ -43,3 +43,14 @@ model Shields {
   
   @@map("shields")
 }
+
+model Legends {
+  id       Int      @id @default(autoincrement())
+  name    String  
+  number Int
+  position String
+  imageUrl String
+  shortText String
+
+  @@map("legends")
+}

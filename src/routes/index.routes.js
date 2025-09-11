@@ -4,6 +4,7 @@ import express from "express";
 import titleRouter from "./titleRoutes.js";
 import playerRouter from "./playerRoutes.js";
 import shieldRouter from "./shieldRoutes.js";
+import legendRouter from "./legendRoutes.js";
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ const router = express.Router();
 router.use("/titles", titleRouter);
 router.use("/shields", shieldRouter);
 router.use("/players", playerRouter);
+router.use("/legends", legendRouter);
 
 export default router;
