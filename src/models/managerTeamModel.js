@@ -28,6 +28,13 @@ class managerTeamModel {
         });
         return updatedManagerTeam;
     }
+
+    async delete(id) {
+        await prisma.managerTeam.delete({
+            where: { id: Number(id) },
+        });
+        return;
+    }
 }
 
 export default new managerTeamModel();

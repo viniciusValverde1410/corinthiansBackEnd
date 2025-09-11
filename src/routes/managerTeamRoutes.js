@@ -11,4 +11,6 @@ router.post("/", managerTeam.createMember);
 
 router.put("/:id", managerTeam.updateMember);
 
+router.delete("/:id", managerTeam.deleteMember);
+
 export default router;

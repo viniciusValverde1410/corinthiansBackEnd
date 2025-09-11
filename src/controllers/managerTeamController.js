@@ -73,6 +73,25 @@ class managerTeamController {
             res.status(500).json({ error: "Erro ao atualizar membro" });
         }
     }
+
+    async deleteMember(req, res) {
+        const { id } = req.params;
+        try {
+            const existingMember = await managerTeamModel.findById(id);
+            if (!existingMember) {
+                return res.status(404).json({ error: "Membro não encontrado" });
+            }
+            const deletedMember = await managerTeamModel.delete(id);
+            const managerTeam = await managerTeamModel.findAll();
+            res.status(200).json({
+                message: ` Membro cadastrado com sucesso, ${managerTeam.length} membros cadastrados`,
+                deletedMember: deletedMember
+            });
+        } catch (error) {
+            console.error("Erro ao deletar membro:", error);
+            res.status(500).json({ error: "Erro ao deletar membro" });
+        }
+    }
 }
 
 export default new managerTeamController();
