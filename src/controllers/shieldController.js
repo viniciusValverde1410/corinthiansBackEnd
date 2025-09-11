@@ -49,7 +49,16 @@ class shieldController {
         }
     }
 
-    
+    async deleteShield(req, res) {
+        const { id } = req.params;                  
+        try {
+            const deletedShield = await shieldModel.delete(id);
+            res.status(200).json(deletedShield);
+        } catch (error) {
+            console.error("Erro ao deletar o escudo:", error);
+            res.status(500).json({ error: "Erro ao deletar o escudo." });
+        }
+    }
 
 }
 

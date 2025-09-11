@@ -29,6 +29,15 @@ class shieldModel {
         });
         return updatedShield;
     }
+
+    async delete(id) {
+        const deletedShield = await prisma.shields.delete({
+            where: { id: Number(id) },
+        });
+
+        
+    }
+
 }
 
 export default new shieldModel();

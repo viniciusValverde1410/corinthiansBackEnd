@@ -11,4 +11,6 @@ shieldRouter.post("/", ShieldController.createShield);
 
 shieldRouter.put("/:id", ShieldController.updateShield);
 
+shieldRouter.delete("/:id", ShieldController.deleteShield);
+
 export default shieldRouter;
