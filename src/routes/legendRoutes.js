@@ -11,4 +11,6 @@ legendRouter.post("/", LegendController.createLegend);
 
 legendRouter.put("/:id", LegendController.updateLegend);
 
+legendRouter.delete("/:id", LegendController.deleteLegend);
+
 export default legendRouter;

@@ -29,6 +29,13 @@ class legendModel {
         });
         return updatedLegend;
     }
+
+    async delete(id) {
+        const deletedLegend = await prisma.legends.delete({
+            where: { id: Number(id) },
+        });
+        return deletedLegend;
+    }
 }
 
 export default new legendModel();

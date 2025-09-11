@@ -74,6 +74,22 @@ class LegendController {
             res.status(500).json({ error: "Erro ao atualizar lenda" });
         }
     }
+
+    async deleteLegend(req, res) {
+        try {
+            const { id } = req.params;
+            const existingLegend = await legendModel.findById
+(id);
+            if (!existingLegend) {
+                return res.status(404).json({ error: "Lenda não encontrada" });
+            }
+            await legendModel.delete(id);
+            res.json({ message: "Lenda deletada com sucesso" });
+        } catch (error) {
+            console.error("Erro ao deletar lenda:", error);
+            res.status(500).json({ error: "Erro ao deletar lenda" });
+        }
+    }
 }
 
 export default new LegendController();
