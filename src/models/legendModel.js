@@ -14,6 +14,13 @@ class legendModel {
         });
         return legend;
     }
+
+    async create(legendData) {
+        const newLegend = await prisma.legends.create({
+            data: legendData,
+        });
+        return newLegend;
+    }
 }
 
 export default new legendModel();
