@@ -27,6 +27,27 @@ class managerTeamController {
             res.status(500).json({ error: "Erro ao buscar membro" });
         }
     }
+
+    async createMember(req, res) {
+        const memberData = req.body;
+        try {
+            if (!memberData) {
+                return res
+                    .status(400)
+                    .json({ error: "Todos os dados do membro são obrigatórios" });
+            }
+            const newMember = await managerTeamModel.create(memberData);
+            const managerTeam = await managerTeamModel.findAll();
+            res.status(201).json({
+                message: ` Membro cadastrado com sucesso, ${managerTeam.length} membros cadastrados`,
+                newMember: newMember
+            });
+        }
+        catch (error) {
+            console.error("Erro ao criar membro:", error);
+            res.status(500).json({ error: "Erro ao criar membro" });
+        }
+    }
 }
 
 export default new managerTeamController();

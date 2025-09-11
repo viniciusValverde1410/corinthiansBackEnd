@@ -13,6 +13,13 @@ class managerTeamModel {
         });
         return managerTeam;
     }
+
+    async create(managerTeamData) {
+        const newManagerTeam = await prisma.managerTeam.create({
+            data: managerTeamData,
+        });
+        return newManagerTeam;
+    }
 }
 
 export default new managerTeamModel();
