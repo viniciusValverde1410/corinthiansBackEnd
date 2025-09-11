@@ -54,3 +54,12 @@ model Legends {
 
   @@map("legends")
 }
+
+model managerTeam {
+  id       Int      @id @default(autoincrement())
+  name    String  
+  imageUrl String
+  shortText String
+
+  @@map("managerTeam")
+}
