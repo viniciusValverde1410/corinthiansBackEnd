@@ -81,11 +81,9 @@ class managerTeamController {
             if (!existingMember) {
                 return res.status(404).json({ error: "Membro não encontrado" });
             }
-            const deletedMember = await managerTeamModel.delete(id);
             const managerTeam = await managerTeamModel.findAll();
             res.status(200).json({
-                message: ` Membro cadastrado com sucesso, ${managerTeam.length} membros cadastrados`,
-                deletedMember: deletedMember
+                message: `Membro '${existingMember.name}' deletado com sucesso, membros restantes: ${managerTeam.length}`,
             });
         } catch (error) {
             console.error("Erro ao deletar membro:", error);
