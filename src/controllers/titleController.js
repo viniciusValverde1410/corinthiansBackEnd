@@ -3,8 +3,11 @@ import TitleModel from "../models/titleModel.js";
 class TitleController {
   async getAllTitles(req, res) {
     try {
-      const titulos = await TitleModel.findAll();
-      res.json(titulos);
+      const titles = await TitleModel.findAll();
+      res.json({
+        message: `${titles.length} títulos encontrados`,
+        titles: titles
+      });
     } catch (error) {
       console.error("Erro ao buscar títulos:", error);
       res.status(500).json({ error: "Erro ao buscar títulos" });
@@ -14,14 +17,16 @@ class TitleController {
   async getTitleById(req, res) {
     try {
       const { id } = req.params;
+      const title = await TitleModel.findById(id);
 
-      const titulo = await TitleModel.findById(id);
-
-      if (!titulo) {
+      if (!title) {
         return res.status(404).json({ error: "Título não encontrado" });
       }
 
-      res.json(titulo);
+      res.json({
+        message: "Título encontrado com sucesso",
+        title: title
+      });
     } catch (error) {
       console.error("Erro ao buscar título:", error);
       res.status(500).json({ error: "Erro ao buscar título" });
@@ -55,7 +60,15 @@ class TitleController {
       }
 
       const newTitle = await TitleModel.create(titleData);
-      res.status(201).json(newTitle);
+      
+      // Conta total de títulos após criação
+      const allTitles = await TitleModel.findAll();
+      
+      res.status(201).json({
+        message: "Título cadastrado com sucesso",
+        totalTitles: allTitles.length,
+        newTitle: newTitle
+      });
     } catch (error) {
       console.error("Erro ao criar título:", error);
       res.status(500).json({ error: "Erro ao criar título" });
@@ -67,15 +80,16 @@ class TitleController {
     const titleData = req.body;
 
     try {
-      const existingPlayer = await playerModel.findById(id);
-      if (!existingPlayer) {
-        return res.status(404).json({ error: "Jogador não encontrado" });
-      }
-
       if (!titleData) {
         return res
           .status(400)
           .json({ error: "Todos os dados do título são obrigatórios" });
+      }
+
+      const existingTitle = await TitleModel.findById(id);
+      
+      if (!existingTitle) {
+        return res.status(404).json({ error: "Título não encontrado" });
       }
 
       if (titleData.category) {
@@ -95,7 +109,10 @@ class TitleController {
       }
 
       const updatedTitle = await TitleModel.update(id, titleData);
-      res.json(updatedTitle);
+      res.json({
+        message: "Título atualizado com sucesso",
+        updatedTitle: updatedTitle
+      });
     } catch (error) {
       console.error("Erro ao atualizar título:", error);
       res.status(500).json({ error: "Erro ao atualizar título" });
@@ -103,10 +120,24 @@ class TitleController {
   }
 
   async deleteTitle(req, res) {
-    const { id } = req.params;
     try {
+      const { id } = req.params;
+      const existingTitle = await TitleModel.findById(id);
+      
+      if (!existingTitle) {
+        return res.status(404).json({ error: "Título não encontrado" });
+      }
+      
       await TitleModel.delete(id);
-      res.status(200).json({ message: "Título deletado com sucesso" });
+      
+      // Conta títulos restantes após deletar
+      const remainingTitles = await TitleModel.findAll();
+      
+      res.status(200).json({ 
+        message: "Título deletado com sucesso",
+        remainingTitles: remainingTitles.length,
+        deletedTitle: existingTitle.name || `ID: ${id}`
+      });
     } catch (error) {
       console.error("Erro ao deletar título:", error);
       res.status(500).json({ error: "Erro ao deletar título" });

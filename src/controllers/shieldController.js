@@ -4,62 +4,110 @@ class shieldController {
     async getAllShields(req, res) {
         try {
             const shields = await shieldModel.findAll();
-            res.status(200).json(shields);
+            res.json({
+                message: `${shields.length} escudos encontrados`,
+                shields: shields
+            });
         } catch (error) {
-            console.error("Erro ao obter os escudos:", error);
-            res.status(500).json({ error: "Erro ao obter os escudos." });
+            console.error("Erro ao buscar escudos:", error);
+            res.status(500).json({ error: "Erro ao buscar escudos" });
         }
     }
 
     async getShieldById(req, res) {
-        const { id } = req.params;
         try {
+            const { id } = req.params;
             const shield = await shieldModel.findById(id);
-            if (shield) {
-                res.status(200).json(shield);
-            } else {
-                res.status(404).json({ error: "Escudo não encontrado." });
+
+            if (!shield) {
+                return res.status(404).json({ error: "Escudo não encontrado" });
             }
+            res.json({
+                message: "Escudo encontrado com sucesso",
+                shield: shield
+            });
         } catch (error) {
-            console.error("Erro ao obter o escudo:", error);
-            res.status(500).json({ error: "Erro ao obter o escudo." });
+            console.error("Erro ao buscar escudo:", error);
+            res.status(500).json({ error: "Erro ao buscar escudo" });
         }
     }
 
     async createShield(req, res) {
         const shieldData = req.body;
         try {
+            if (!shieldData) {
+                return res
+                    .status(400)
+                    .json({ error: "Todos os dados do escudo são obrigatórios" });
+            }
+
             const newShield = await shieldModel.create(shieldData);
-            res.status(201).json(newShield);
+            
+            // Conta total de escudos após criação
+            const allShields = await shieldModel.findAll();
+            
+            res.status(201).json({
+                message: "Escudo cadastrado com sucesso",
+                totalShields: allShields.length,
+                newShield: newShield
+            });
         } catch (error) {
-            console.error("Erro ao criar o escudo:", error);
-            res.status(500).json({ error: "Erro ao criar o escudo." });
+            console.error("Erro ao criar escudo:", error);
+            res.status(500).json({ error: "Erro ao criar escudo" });
         }
     }
 
     async updateShield(req, res) {
         const { id } = req.params;
         const shieldData = req.body;
+
         try {
+            if (!shieldData) {
+                return res
+                    .status(400)
+                    .json({ error: "Todos os dados do escudo são obrigatórios" });
+            }
+            
+            const existingShield = await shieldModel.findById(id);
+            
+            if (!existingShield) {
+                return res.status(404).json({ error: "Escudo não encontrado" });
+            }
+
             const updatedShield = await shieldModel.update(id, shieldData);
-            res.status(200).json(updatedShield);
+            res.json({
+                message: "Escudo atualizado com sucesso",
+                updatedShield: updatedShield
+            });
         } catch (error) {
-            console.error("Erro ao atualizar o escudo:", error);
-            res.status(500).json({ error: "Erro ao atualizar o escudo." });
+            console.error("Erro ao atualizar escudo:", error);
+            res.status(500).json({ error: "Erro ao atualizar escudo" });
         }
     }
 
     async deleteShield(req, res) {
-        const { id } = req.params;                  
         try {
-            const deletedShield = await shieldModel.delete(id);
-            res.status(200).json(deletedShield);
+            const { id } = req.params;
+            const existingShield = await shieldModel.findById(id);
+            if (!existingShield) {
+                return res.status(404).json({ error: "Escudo não encontrado" });
+            }
+            
+            await shieldModel.delete(id);
+            
+            // Conta escudos restantes após deletar
+            const remainingShields = await shieldModel.findAll();
+            
+            res.status(200).json({ 
+                message: "Escudo deletado com sucesso",
+                remainingShields: remainingShields.length,
+                deletedShield: existingShield.name || `ID: ${id}`
+            });
         } catch (error) {
-            console.error("Erro ao deletar o escudo:", error);
-            res.status(500).json({ error: "Erro ao deletar o escudo." });
+            console.error("Erro ao deletar escudo:", error);
+            res.status(500).json({ error: "Erro ao deletar escudo" });
         }
     }
-
 }
 
 export default new shieldController();

@@ -4,7 +4,10 @@ class playerController {
     async getAllPlayers(req, res) {
         try {
             const players = await playerModel.findAll();
-            res.json(players);
+            res.json({
+                message: `${players.length} jogadores encontrados`,
+                players: players
+            });
         } catch (error) {
             console.error("Erro ao buscar jogadores:", error);
             res.status(500).json({ error: "Erro ao buscar jogadores" });
@@ -19,7 +22,10 @@ class playerController {
             if (!player) {
                 return res.status(404).json({ error: "Jogador não encontrado" });
             }
-            res.json(player);
+            res.json({
+                message: "Jogador encontrado com sucesso",
+                player: player
+            });
         } catch (error) {
             console.error("Erro ao buscar jogador:", error);
             res.status(500).json({ error: "Erro ao buscar jogador" });
@@ -54,7 +60,15 @@ class playerController {
             }
 
             const newPlayer = await playerModel.create(playerData);
-            res.status(201).json(newPlayer);
+            
+            // Conta total de jogadores após criação
+            const allPlayers = await playerModel.findAll();
+            
+            res.status(201).json({
+                message: "Jogador cadastrado com sucesso",
+                totalPlayers: allPlayers.length,
+                newPlayer: newPlayer
+            });
         } catch (error) {
             console.error("Erro ao criar jogador:", error);
             res.status(500).json({ error: "Erro ao criar jogador" });
@@ -96,7 +110,10 @@ class playerController {
             }
 
             const updatedPlayer = await playerModel.update(id, playerData);
-            res.json(updatedPlayer);
+            res.json({
+                message: "Jogador atualizado com sucesso",
+                updatedPlayer: updatedPlayer
+            });
         } catch (error) {
             console.error("Erro ao atualizar jogador:", error);
             res.status(500).json({ error: "Erro ao atualizar jogador" });
@@ -110,8 +127,17 @@ class playerController {
             if (!existingPlayer) {
                 return res.status(404).json({ error: "Jogador não encontrado" });
             }
+            
             await playerModel.delete(id);
-            res.status(200).json({ message: "Jogador deletado com sucesso" });
+            
+            // Conta jogadores restantes após deletar
+            const remainingPlayers = await playerModel.findAll();
+            
+            res.status(200).json({ 
+                message: "Jogador deletado com sucesso",
+                remainingPlayers: remainingPlayers.length,
+                deletedPlayer: existingPlayer.name || `ID: ${id}`
+            });
         } catch (error) {
             console.error("Erro ao deletar jogador:", error);
             res.status(500).json({ error: "Erro ao deletar jogador" });
