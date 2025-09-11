@@ -33,5 +33,13 @@ model Player {
   height String
   age Int
 
-  @@map("squads")
+  @@map("players")
+}
+
+model Shields {
+  id       Int      @id @default(autoincrement())
+  imageUrl String
+  year String
+  
+  @@map("shields")
 }
