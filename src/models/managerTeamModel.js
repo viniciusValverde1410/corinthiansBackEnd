@@ -20,6 +20,14 @@ class managerTeamModel {
         });
         return newManagerTeam;
     }
+
+    async update(id, managerTeamData) {
+        const updatedManagerTeam = await prisma.managerTeam.update({
+            where: { id: Number(id) },
+            data: managerTeamData,
+        });
+        return updatedManagerTeam;
+    }
 }
 
 export default new managerTeamModel();

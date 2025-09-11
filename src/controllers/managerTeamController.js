@@ -48,6 +48,31 @@ class managerTeamController {
             res.status(500).json({ error: "Erro ao criar membro" });
         }
     }
+
+    async updateMember(req, res) {
+        const { id } = req.params;
+        const memberData = req.body;
+
+        try {
+            const existingMember = await managerTeamModel.findById(id);
+            if (!existingMember) {
+                return res.status(404).json({ error: "Membro não encontrado" });
+            }
+            if (!memberData) {
+                return res
+                    .status(400)
+                    .json({ error: "Todos os dados do membro são obrigatórios" });
+            }
+            const updatedMember = await managerTeamModel.update(id, memberData);
+            res.json({
+                message: "Membro atualizado com sucesso",
+                updatedMember: updatedMember
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar membro:", error);
+            res.status(500).json({ error: "Erro ao atualizar membro" });
+        }
+    }
 }
 
 export default new managerTeamController();

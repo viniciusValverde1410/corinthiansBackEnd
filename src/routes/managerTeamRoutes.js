@@ -9,4 +9,6 @@ router.get("/:id", managerTeam.getmemberById);
 
 router.post("/", managerTeam.createMember);
 
+router.put("/:id", managerTeam.updateMember);
+
 export default router;
