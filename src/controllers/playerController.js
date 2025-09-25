@@ -143,6 +143,31 @@ class playerController {
             res.status(500).json({ error: "Erro ao deletar jogador" });
         }
     }
+
+    async createManyPlayers(req, res) {
+        const players = req.body;
+        if (!Array.isArray(players) || players.length === 0) {
+            return res.status(400).json({ error: "Envie um array de jogadores" });
+        }
+        // Validação das posições
+        const validPositions = ["goleiro", "defensor", "meio-campista", "atacante"];
+        for (const player of players) {
+            if (!validPositions.includes((player.position || "").toLowerCase())) {
+                return res.status(400).json({ error: `Posição deve ser goleiro, defensor, meio-campista ou atacante (erro em ${player.name || 'jogador sem nome'})` });
+            }
+        }
+        try {
+            const result = await playerModel.createMany(players);
+            const allPlayers = await playerModel.findAll();
+            res.status(201).json({
+                message: `${result.count} jogadores cadastrados com sucesso`,
+                totalPlayers: allPlayers.length
+            });
+        } catch (error) {
+            console.error("Erro ao cadastrar jogadores em lote:", error);
+            res.status(500).json({ error: "Erro ao cadastrar jogadores em lote" });
+        }
+    }
 }
 
 export default new playerController();

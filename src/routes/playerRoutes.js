@@ -10,6 +10,8 @@ playerRouter.get("/:id", playerController.getPlayerById);
 
 playerRouter.post("/", playerController.createPlayer);
 
+playerRouter.post("/bulk", playerController.createManyPlayers);
+
 playerRouter.put("/:id", playerController.updatePlayer);
 
 playerRouter.delete("/:id", playerController.deletePlayer);

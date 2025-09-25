@@ -30,6 +30,13 @@ class playerModel {
     return newPlayer;
   }
 
+  async createMany(players) {
+    const result = await prisma.player.createMany({
+      data: players
+    });
+    return result;
+  }
+
   async update(id, playerData) {
     const updatedPlayer = await prisma.player.update({
       where: { id: Number(id) },
