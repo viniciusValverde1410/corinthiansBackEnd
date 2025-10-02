@@ -46,7 +46,10 @@ class playerController {
                 const positionLower = playerData.position.toLowerCase();
                 if (
                     positionLower !== "goleiro" &&
-                    positionLower !== "defensor" &&
+                    positionLower !== "zagueiro" &&
+                    positionLower !== "lateral direito" &&
+                    positionLower !== "lateral esquerdo" &&
+                    positionLower !== "volante" &&
                     positionLower !== "meio-campista" &&
                     positionLower !== "atacante"
                 ) {
@@ -54,7 +57,7 @@ class playerController {
                         .status(400)
                         .json({
                             error:
-                                "Posição deve ser goleiro, defensor, meio-campista ou atacante",
+                                "Posição deve ser goleiro, zagueiro, lateral direito, lateral esquerdo, volante, meio-campista ou atacante",
                         });
                 }
             }
@@ -96,7 +99,10 @@ class playerController {
                 const positionLower = playerData.position.toLowerCase();
                 if (
                     positionLower !== "goleiro" &&
-                    positionLower !== "defensor" &&
+                    positionLower !== "zagueiro" &&
+                    positionLower !== "lateral direito" &&
+                    positionLower !== "lateral esquerdo" &&
+                    positionLower !== "volante" &&
                     positionLower !== "meio-campista" &&
                     positionLower !== "atacante"
                 ) {
@@ -104,7 +110,7 @@ class playerController {
                         .status(400)
                         .json({
                             error:
-                                "Posição deve ser goleiro, defensor, meio-campista ou atacante",
+                                "Posição deve ser goleiro, zagueiro, lateral direito, lateral esquerdo, volante, meio-campista ou atacante",
                         });
                 }
             }

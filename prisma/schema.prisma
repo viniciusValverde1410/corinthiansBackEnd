@@ -30,8 +30,10 @@ model Player {
   imageUrl String
   position String
   number Int
+  nationality String
   height String
   age Int
+  birthDate String
 
   @@map("players")
 }
