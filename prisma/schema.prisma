@@ -53,6 +53,7 @@ model Legends {
   position String
   imageUrl String
   shortText String
+  year Int
 
   @@map("legends")
 }
