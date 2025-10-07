@@ -49,6 +49,26 @@ class LegendController {
         }
     }
 
+    async createManyLegends(req, res) {
+        const legendsData = req.body;
+        try {
+            if (!Array.isArray(legendsData) || legendsData.length === 0) {
+                return res
+                    .status(400)
+                    .json({ error: "Dados inválidos para criação em massa" });
+            }
+            const newLegends = await legendModel.createMany(legendsData);
+            res.status(201).json({
+                message: "Lendas cadastradas com sucesso",
+                newLegends: newLegends
+            });
+        }
+        catch (error) {
+            console.error("Erro ao criar lendas:", error);
+            res.status(500).json({ error: "Erro ao criar lendas" });
+        }
+    }
+
     async updateLegend(req, res) {
         const { id } = req.params;
         const legendData = req.body;

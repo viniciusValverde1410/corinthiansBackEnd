@@ -22,6 +22,13 @@ class legendModel {
         return newLegend;
     }
 
+    async createMany(legendsData) {
+        const newLegends = await prisma.legends.createMany({
+            data: legendsData,
+        });
+        return newLegends;
+    }
+
     async update(id, legendData) {
         const updatedLegend = await prisma.legends.update({
             where: { id: Number(id) },

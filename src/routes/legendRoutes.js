@@ -9,6 +9,8 @@ legendRouter.get("/:id", LegendController.getLegendById);
 
 legendRouter.post("/", LegendController.createLegend);
 
+legendRouter.post("/bulk", LegendController.createManyLegends);
+
 legendRouter.put("/:id", LegendController.updateLegend);
 
 legendRouter.delete("/:id", LegendController.deleteLegend);
