@@ -121,7 +121,7 @@ npx prisma migrate dev
 npm run dev
 ```
 
-O servidor estará rodando em: **http://localhost:4001** 🦅
+O servidor estará rodando em: **http://localhost:4000** 🦅
 
 ---
 
